@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @media (pointer: fine) { body[data-saiko] { cursor: none; } }
+    body { margin:0; background:#FAFAFB; }
+    * { box-sizing: border-box; }
+    a { color: inherit; }
+    @keyframes saikoFadeUp { from { opacity:0; transform: translateY(28px);} to { opacity:1; transform: translateY(0);} }
+    @keyframes saikoGrad { 0%,100% { background-position:0% 50%;} 50% { background-position:100% 50%;} }
+    @keyframes saikoShine { from { background-position:125% 0;} to { background-position:-125% 0;} }
+    @keyframes saikoDraw { to { stroke-dashoffset: 0; } }
+    @keyframes saikoMarquee { from { transform: translateX(0);} to { transform: translateX(-50%);} }
+    @keyframes saikoBlobA { 0%,100% { transform: translate(0,0) scale(1);} 50% { transform: translate(60px,40px) scale(1.15);} }
+    @keyframes saikoBlobB { 0%,100% { transform: translate(0,0) scale(1);} 50% { transform: translate(-50px,-30px) scale(1.1);} }
+    @keyframes saikoPulse { 0%,100% { opacity:0.55;} 50% { opacity:1;} }
+    @keyframes saikoBlink { 0%,49% { opacity:1;} 50%,100% { opacity:0;} }
+  </style>
+</helmet>
+<div data-saiko="1" style="{{ rootStyle }}">
+
+  <div style="{{ progressStyle }}"></div>
+
+  <sc-if value="{{ showCursor }}" hint-placeholder-val="{{ false }}">
+    <div style="{{ cursorRingStyle }}"></div>
+    <div style="{{ cursorDotStyle }}"></div>
+  </sc-if>
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px 48px; background:var(--header-bg); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--border-soft);">
+    <a href="index.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="display:flex; flex-direction:column; align-items:center; gap:3px; text-decoration:none;">
+      <svg width="30" height="13" viewBox="0 0 100 40" style="overflow:visible; display:block;"><defs><linearGradient id="lgm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3B6EF5"/><stop offset="1" stop-color="#9B4DFF"/></linearGradient></defs><path d="M10,38 Q50,-6 90,38" fill="none" stroke="url(#lgm)" stroke-width="8" stroke-linecap="round"></path></svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px; letter-spacing:4px; color:var(--ink);">SAIKO <span style="font-weight:400; color:var(--ink-sub);">LABS</span></span>
+    </a>
+    <nav style="display:flex; align-items:center; gap:38px;">
+      <a href="index.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="font-size:14px; font-weight:600; text-decoration:none; color:var(--ink);">Accueil</a>
+      <a href="Services.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style-hover="color:var(--ink);" style="font-size:14px; font-weight:500; text-decoration:none; color:var(--ink-sub); transition:color 0.25s ease;">Services</a>
+      <a href="Realisations.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style-hover="color:var(--ink);" style="font-size:14px; font-weight:500; text-decoration:none; color:var(--ink-sub); transition:color 0.25s ease;">Réalisations</a>
+      <a href="Contact.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style-hover="color:var(--ink);" style="font-size:14px; font-weight:500; text-decoration:none; color:var(--ink-sub); transition:color 0.25s ease;">Contact</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <button onClick="{{ toggleTheme }}" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" aria-label="Changer de thème" style="{{ toggleTrackStyle }}">
+        <div style="{{ toggleThumbStyle }}">{{ toggleIcon }}</div>
+      </button>
+      <a href="Contact.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="text-decoration:none; font-size:14px; font-weight:700; color:#fff; background:linear-gradient(135deg,#3B6EF5,#9B4DFF); padding:11px 22px; border-radius:100px; transition:transform 0.3s cubic-bezier(0.2,0.8,0.3,1);" style-hover="transform:scale(1.05);">Démarrer un projet</a>
+    </div>
+  </header>
+
+  <section style="position:relative; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:160px 24px 100px; text-align:center;">
+    <div style="position:absolute; inset:0; background-image:linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size:52px 52px; -webkit-mask-image:radial-gradient(ellipse 90% 75% at 50% 35%, black 25%, transparent 82%); mask-image:radial-gradient(ellipse 90% 75% at 50% 35%, black 25%, transparent 82%); pointer-events:none;"></div>
+    <div style="{{ blobAWrap }}"><div style="width:100%; height:100%; border-radius:50%; background:radial-gradient(circle, rgba(59,110,245,0.20), transparent 70%); filter:blur(10px); animation: saikoBlobA 12s ease-in-out infinite;"></div></div>
+    <div style="{{ blobBWrap }}"><div style="width:100%; height:100%; border-radius:50%; background:radial-gradient(circle, rgba(155,77,255,0.20), transparent 70%); filter:blur(10px); animation: saikoBlobB 14s ease-in-out infinite;"></div></div>
+    <span style="position:absolute; bottom:36px; left:50%; transform:translateX(-50%); font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--ink-sub); animation:saikoPulse 2.4s ease-in-out infinite;">↓</span>
+
+    <svg width="190" height="80" viewBox="0 0 100 40" style="overflow:visible; position:relative; z-index:2; margin-bottom:28px; opacity:0; animation: saikoFadeUp 1.1s cubic-bezier(0.28,0.11,0.32,1) forwards 0.05s;">
+      <defs>
+        <linearGradient id="lgh" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#3B6EF5"/>
+          <stop offset="1" stop-color="#9B4DFF"/>
+        </linearGradient>
+      </defs>
+      <path d="M10,38 Q50,-6 90,38" fill="none" stroke="url(#lgh)" stroke-width="6" stroke-linecap="round" stroke-dasharray="160" stroke-dashoffset="160" style="animation: saikoDraw 1.7s cubic-bezier(0.28,0.11,0.32,1) forwards 0.35s;"></path>
+    </svg>
+    <div style="position:relative; z-index:2; display:flex; align-items:center; gap:10px; padding:0; margin-bottom:36px; opacity:0; animation: saikoFadeUp 0.8s ease forwards 0.3s;">
+      <span style="width:7px; height:7px; border-radius:50%; background:linear-gradient(135deg,#3B6EF5,#9B4DFF); animation: saikoPulse 1.8s ease-in-out infinite;"></span>
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-sub);"><span style="color:#9B4DFF;">~/saiko&nbsp;$</span> {{ typedText }}<span style="color:var(--ink); animation:saikoBlink 1.1s steps(1) infinite;">▍</span></span>
+    </div>
+
+    <h1 style="position:relative; z-index:2; font-size:clamp(46px,7.6vw,106px); line-height:1.02; font-weight:700; letter-spacing:-0.035em; max-width:1080px; margin:0 0 28px; color:var(--ink); opacity:0; animation: saikoFadeUp 0.9s ease forwards 0.25s;">
+      On code la couche technique qui fait <span style="background:linear-gradient(135deg,#3B6EF5,#9B4DFF); -webkit-background-clip:text; background-clip:text; color:transparent;">scaler</span> votre business.
+    </h1>
+
+    <p style="position:relative; z-index:2; font-size:19px; line-height:1.6; color:var(--ink-sub); max-width:620px; margin:0 0 44px; font-weight:500; opacity:0; animation: saikoFadeUp 0.9s ease forwards 0.4s;">
+      Sites premium, IA, automatisations et SaaS — codés par des ingénieurs.
+    </p>
+
+    <div style="position:relative; z-index:2; display:flex; gap:16px; flex-wrap:wrap; justify-content:center; opacity:0; animation: saikoFadeUp 0.9s ease forwards 0.55s;">
+      <a href="Contact.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="text-decoration:none; font-size:15.5px; font-weight:700; color:#fff; background:linear-gradient(135deg,#3B6EF5,#9B4DFF); padding:16px 32px; border-radius:100px; transition:transform 0.3s cubic-bezier(0.2,0.8,0.3,1);" style-hover="transform:scale(1.05);">Démarrer un projet</a>
+      <a href="Realisations.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="text-decoration:none; font-size:15.5px; font-weight:600; color:#3B6EF5; background:transparent; padding:14px 8px;" style-hover="text-decoration:underline;">Voir nos réalisations ›</a>
+    </div>
+  </section>
+
+  <div style="position:relative; padding:20px 0; border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft); background:var(--bg-alt); overflow:hidden; white-space:nowrap; -webkit-mask-image:linear-gradient(90deg, transparent, black 12%, black 88%, transparent); mask-image:linear-gradient(90deg, transparent, black 12%, black 88%, transparent);">
+    <div style="display:inline-flex; animation: saikoMarquee 22s linear infinite;">
+      <sc-for list="{{ marqueeItems }}" as="mi" hint-placeholder-count="16">
+        <span style="display:inline-flex; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:14px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink); padding:0 28px;">
+          {{ mi.label }} <span style="margin-left:28px; color:#9B4DFF;">✦</span>
+        </span>
+      </sc-for>
+    </div>
+  </div>
+
+  <section ref="{{ refServices }}" style="padding:140px 48px; max-width:1280px; margin:0 auto;">
+    <div style="{{ servicesHeadStyle }}">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:2px; color:#9B4DFF; text-transform:uppercase; font-weight:600;">/01 — expertises</span>
+      <h2 style-hover="background:linear-gradient(110deg, var(--ink) 25%, #3B6EF5 42%, #9B4DFF 58%, var(--ink) 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:clamp(30px,4vw,48px); font-weight:700; letter-spacing:-0.03em; margin:14px 0 0; max-width:640px; color:var(--ink);">Quatre leviers pour un business qui tourne tout seul.</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:56px;">
+      <sc-for list="{{ serviceCards }}" as="card" hint-placeholder-count="4">
+        <div onMouseMove="{{ card.onMove }}" onMouseLeave="{{ card.onLeave }}" onMouseEnter="{{ cursorEnter }}" style="{{ card.style }}">
+          <div style="width:46px; height:46px; border-radius:12px; background:linear-gradient(135deg,#3B6EF5,#9B4DFF); display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+            <div style="{{ card.iconStyle }}"></div>
+          </div>
+          <h3 style="font-size:20px; font-weight:700; margin:0 0 10px; letter-spacing:-0.3px; color:var(--ink);">{{ card.title }}</h3>
+          <p style="font-size:14.5px; line-height:1.6; color:var(--ink-sub); margin:0; font-weight:500;">{{ card.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section ref="{{ refProcess }}" style="padding:140px 48px; background:#0A0A0C; color:#fff;">
+    <div style="max-width:1280px; margin:0 auto;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:2px; color:#9B4DFF; text-transform:uppercase; font-weight:600;">/02 — méthode</span>
+      <h2 style-hover="background:linear-gradient(110deg, #ffffff 25%, rgba(255,255,255,0.35) 50%, #ffffff 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:clamp(30px,4vw,48px); font-weight:700; letter-spacing:-0.03em; margin:14px 0 64px; max-width:640px;">De l'idée à la mise en production, sans zone grise.</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:0;">
+        <sc-for list="{{ processSteps }}" as="step" hint-placeholder-count="4">
+          <div style="{{ step.style }}">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:13px; color:#9B4DFF; font-weight:600;">{{ step.num }}</span>
+            <h3 style="font-size:19px; font-weight:700; margin:16px 0 10px;">{{ step.title }}</h3>
+            <p style="font-size:14px; line-height:1.6; color:rgba(255,255,255,0.55); margin:0; font-weight:500;">{{ step.desc }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section ref="{{ refFounders }}" style="padding:140px 48px; max-width:1280px; margin:0 auto;">
+    <div style="{{ foundersHeadStyle }}">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:2px; color:#9B4DFF; text-transform:uppercase; font-weight:600;">/03 — équipe</span>
+      <h2 style-hover="background:linear-gradient(110deg, var(--ink) 25%, #3B6EF5 42%, #9B4DFF 58%, var(--ink) 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:clamp(30px,4vw,48px); font-weight:700; letter-spacing:-0.03em; margin:14px 0 0; max-width:640px; color:var(--ink);">Le duo derrière Saiko Labs.</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:56px;">
+      <sc-for list="{{ founders }}" as="f" hint-placeholder-count="2">
+        <div style="{{ f.style }}">
+          <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#3B6EF5,#9B4DFF); margin-bottom:22px;"></div>
+          <h3 style="font-size:20px; font-weight:700; margin:0 0 4px; color:var(--ink);">{{ f.name }}</h3>
+          <p style="font-size:14px; color:var(--ink-sub); margin:0; font-weight:500;">{{ f.role }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section ref="{{ refCta }}" style="{{ ctaBannerStyle }}">
+    <h2 style-hover="background:linear-gradient(110deg, var(--ink) 25%, #3B6EF5 42%, #9B4DFF 58%, var(--ink) 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:clamp(32px,5vw,56px); font-weight:700; letter-spacing:-0.03em; color:#fff; margin:0 0 28px; max-width:760px;" style-hover="background:linear-gradient(110deg, #ffffff 25%, rgba(255,255,255,0.35) 50%, #ffffff 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;">Prêt à passer à la vitesse supérieure ?</h2>
+    <a href="Contact.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="text-decoration:none; font-size:16px; font-weight:700; color:#0A0A0C; background:#fff; padding:17px 36px; border-radius:100px;">Démarrer un projet</a>
+  </section>
+
+  <footer style="padding:64px 48px 40px; border-top:1px solid var(--border-soft);">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:40px; padding-bottom:36px;">
+      <div style="max-width:280px;">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:5px; margin-bottom:16px; width:fit-content;">
+          <svg width="34" height="15" viewBox="0 0 100 40" style="overflow:visible;"><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3B6EF5"/><stop offset="1" stop-color="#9B4DFF"/></linearGradient></defs><path d="M10,38 Q50,-6 90,38" fill="none" stroke="url(#lg1)" stroke-width="8" stroke-linecap="round"></path></svg>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px; letter-spacing:4px; color:var(--ink);">SAIKO <span style="font-weight:400; color:var(--ink-sub);">LABS</span></span>
+        </div>
+        <p style="font-size:13.5px; color:var(--ink-sub); line-height:1.6; font-weight:500;">Innover. Automatiser. Scaler.</p>
+      </div>
+      <div style="display:flex; gap:64px; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1.5px; color:#9B4DFF; text-transform:uppercase; margin-bottom:4px;">Navigation</span>
+          <a href="Services.dc.html" style-hover="color:var(--ink);" style="font-size:14px; text-decoration:none; color:var(--ink-sub); font-weight:500; transition:color 0.25s ease;">Services</a>
+          <a href="Realisations.dc.html" style-hover="color:var(--ink);" style="font-size:14px; text-decoration:none; color:var(--ink-sub); font-weight:500; transition:color 0.25s ease;">Réalisations</a>
+          <a href="Contact.dc.html" style-hover="color:var(--ink);" style="font-size:14px; text-decoration:none; color:var(--ink-sub); font-weight:500; transition:color 0.25s ease;">Contact</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1.5px; color:#9B4DFF; text-transform:uppercase; margin-bottom:4px;">Contact</span>
+          <span style="font-size:14px; color:var(--ink-sub); font-weight:500;">07 67 92 07 53</span>
+          <span style="font-size:14px; color:var(--ink-sub); font-weight:500;">hello@saikolabs.fr</span>
+          <span style="font-size:14px; color:var(--ink-sub); font-weight:500;">saikolabs.com</span>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1280px; margin:0 auto; padding-top:24px; border-top:1px solid var(--border-soft); font-size:12.5px; color:var(--ink-sub); font-weight:500;">© 2026 Saiko Labs. Tous droits réservés.</div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SAIKO_THEMES = {
+  light: { bg: '#FAFAFB', bgAlt: '#F2F1F5', ink: '#0A0A0C', inkSub: '#6B6B76', cardBg: '#ffffff', border: 'rgba(10,10,12,0.07)', borderSoft: 'rgba(10,10,12,0.06)', borderStrong: 'rgba(10,10,12,0.14)', headerBg: 'rgba(250,250,251,0.78)', grid: 'rgba(10,10,12,0.05)' },
+  dark: { bg: '#080911', bgAlt: '#11131D', ink: '#F1F2F6', inkSub: '#878AA0', cardBg: '#11131D', border: 'rgba(255,255,255,0.08)', borderSoft: 'rgba(255,255,255,0.07)', borderStrong: 'rgba(255,255,255,0.15)', headerBg: 'rgba(8,9,17,0.74)', grid: 'rgba(125,140,255,0.09)' }
+};
+
+class Component extends DCLogic {
+  state = {
+    theme: 'dark',
+    cursorX: 0, cursorY: 0, cursorHover: false, hasFinePointer: false,
+    visible: { services: false, process: false, founders: false, cta: false },
+    tilt: [null, null, null, null],
+    typed: '', scrollP: 0
+  };
+
+  constructor(props) {
+    super(props);
+    if (typeof window !== 'undefined') {
+      try { this.state.theme = window.localStorage.getItem('saiko-theme') || 'dark'; } catch (e) {}
+    }
+    this.observers = {};
+    this.cardMove = [0,1,2,3].map(i => (e) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      const tilt = this.state.tilt.slice();
+      tilt[i] = { rx: py * -8, ry: px * 8 };
+      this.setState({ tilt });
+    });
+    this.cardLeave = [0,1,2,3].map(i => () => {
+      const tilt = this.state.tilt.slice();
+      tilt[i] = null;
+      this.setState({ tilt });
+    });
+    this.refServices = (el) => this.observe(el, 'services');
+    this.refProcess = (el) => this.observe(el, 'process');
+    this.refFounders = (el) => this.observe(el, 'founders');
+    this.refCta = (el) => this.observe(el, 'cta');
+    this.cursorEnter = () => this.setState({ cursorHover: true });
+    this.cursorLeave = () => this.setState({ cursorHover: false });
+    this.onMouseMove = (e) => this.setState({ cursorX: e.clientX, cursorY: e.clientY });
+    this.toggleTheme = () => {
+      const next = this.state.theme === 'dark' ? 'light' : 'dark';
+      this.setState({ theme: next });
+      if (typeof window !== 'undefined') { try { window.localStorage.setItem('saiko-theme', next); } catch (e) {} }
+    };
+  }
+
+  observe(el, key) {
+    if (!el || this.observers[key]) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          this.setState(s => ({ visible: { ...s.visible, [key]: true } }));
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    io.observe(el);
+    this.observers[key] = io;
+  }
+
+  componentDidMount() {
+    if (typeof window !== 'undefined') {
+      this.setState({ hasFinePointer: window.matchMedia('(pointer: fine)').matches });
+      window.addEventListener('mousemove', this.onMouseMove);
+      const full = 'deploy premium-web · seo · ia · saas';
+      let i = 0;
+      this.typeInt = setInterval(() => {
+        i++;
+        this.setState({ typed: full.slice(0, i) });
+        if (i >= full.length) clearInterval(this.typeInt);
+      }, 55);
+      this.onScroll = () => {
+        const d = document.documentElement;
+        this.setState({ scrollP: d.scrollTop / ((d.scrollHeight - d.clientHeight) || 1) });
+      };
+      window.addEventListener('scroll', this.onScroll, { passive: true });
+    }
+  }
+
+  componentWillUnmount() {
+    if (typeof window !== 'undefined') window.removeEventListener('mousemove', this.onMouseMove);
+    if (this.typeInt) clearInterval(this.typeInt);
+    if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+    Object.values(this.observers).forEach(io => io.disconnect());
+  }
+
+  revealStyle(visible, delay) {
+    return {
+      opacity: visible ? 1 : 0,
+      transform: visible ? 'translateY(0)' : 'translateY(24px)',
+      transition: 'opacity 0.8s ease ' + delay + 's, transform 0.8s ease ' + delay + 's'
+    };
+  }
+
+  renderVals() {
+    const v = this.state.visible;
+    const t = SAIKO_THEMES[this.state.theme];
+    const isDark = this.state.theme === 'dark';
+
+    const rawServices = [
+      { title: 'Sites web premium', desc: "Des sites vitrines et e-commerce ultra-rapides, animés, pensés pour convertir et référencés dès le premier jour." },
+      { title: 'Intelligence Artificielle', desc: "Chatbots, assistants et intégrations IA sur-mesure qui automatisent votre relation client et vos process internes." },
+      { title: 'Automatisations sur-mesure', desc: "Vos outils connectés entre eux : fini la saisie manuelle, place aux workflows qui tournent seuls." },
+      { title: 'Solutions SaaS évolutives', desc: "Des plateformes cloud pensées pour grandir : architecture solide, scalable, prête pour vos utilisateurs de demain." }
+    ];
+
+    const serviceCards = rawServices.map((s, i) => {
+      const tt = this.state.tilt[i];
+      const transform = tt ? `perspective(600px) rotateX(${tt.rx}deg) rotateY(${tt.ry}deg) translateY(-4px)` : 'perspective(600px) rotateX(0) rotateY(0)';
+      return {
+        title: s.title,
+        desc: s.desc,
+        onMove: this.cardMove[i],
+        onLeave: this.cardLeave[i],
+        iconStyle: { width: '18px', height: '18px', borderRadius: '4px', background: 'rgba(255,255,255,0.9)' },
+        style: {
+          background: t.cardBg,
+          border: '1px solid ' + t.border,
+          borderRadius: '24px',
+          padding: '32px',
+          transform,
+          transition: tt ? 'transform 0.1s ease, background 0.4s ease, border-color 0.4s ease' : 'transform 0.4s ease, background 0.4s ease, border-color 0.4s ease',
+          boxShadow: tt ? '0 20px 40px rgba(20,20,40,0.10)' : '0 2px 8px rgba(20,20,40,0.04)',
+          cursor: 'default'
+        }
+      };
+    });
+
+    const rawProcess = [
+      { num: '01', title: 'Discovery', desc: "On cadre vos objectifs, votre marché et vos contraintes techniques." },
+      { num: '02', title: 'Design', desc: "Direction artistique et UX pensées pour votre cible, pas pour la mode." },
+      { num: '03', title: 'Build', desc: "Développement propre, performant, animé — testé à chaque étape." },
+      { num: '04', title: 'Scale', desc: "Mise en ligne, référencement, et suivi pour faire grandir le projet dans la durée." }
+    ];
+    const processSteps = rawProcess.map((s, i) => ({
+      num: s.num, title: s.title, desc: s.desc,
+      style: {
+        padding: '28px 28px 28px 0',
+        borderLeft: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.12)',
+        paddingLeft: i === 0 ? '0' : '28px',
+        ...this.revealStyle(v.process, i * 0.12)
+      }
+    }));
+
+    const founders = [
+      { name: 'El Mawaguiry Mahmoud', role: 'Founder & Digital Engineer' },
+      { name: 'Ismael Ghazi', role: 'Founder & Digital Engineer' }
+    ].map((f, i) => ({
+      ...f,
+      style: {
+        background: t.bgAlt,
+        borderRadius: '24px',
+        padding: '32px',
+        transition: 'background 0.4s ease',
+        ...this.revealStyle(v.founders, i * 0.15)
+      }
+    }));
+
+    const marqueeItems = Array(2).fill(['Sites web premium', 'Intelligence Artificielle', 'Automatisations sur-mesure', 'Solutions SaaS']).flat().map(label => ({ label }));
+
+    return {
+      rootStyle: {
+        position: 'relative', fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif",
+        background: t.bg, color: t.ink, overflowX: 'hidden', minHeight: '100vh',
+        transition: 'background 0.4s ease, color 0.4s ease',
+        '--bg': t.bg, '--bg-alt': t.bgAlt, '--ink': t.ink, '--ink-sub': t.inkSub,
+        '--card-bg': t.cardBg, '--border': t.border, '--border-soft': t.borderSoft,
+        '--border-strong': t.borderStrong, '--header-bg': t.headerBg, '--grid': t.grid
+      },
+      showCursor: this.state.hasFinePointer,
+      cursorDotStyle: {
+        position: 'fixed', top: 0, left: 0, width: '8px', height: '8px', borderRadius: '50%',
+        background: t.ink, pointerEvents: 'none', zIndex: 9999,
+        transform: `translate(${this.state.cursorX - 4}px, ${this.state.cursorY - 4}px)`,
+        transition: 'transform 0.05s linear, opacity 0.2s ease',
+        opacity: this.state.cursorHover ? 0 : 1
+      },
+      cursorRingStyle: {
+        position: 'fixed', top: 0, left: 0, borderRadius: '50%', pointerEvents: 'none', zIndex: 9998,
+        border: '1.5px solid #9B4DFF',
+        width: this.state.cursorHover ? '54px' : '30px',
+        height: this.state.cursorHover ? '54px' : '30px',
+        transform: `translate(${this.state.cursorX - (this.state.cursorHover ? 27 : 15)}px, ${this.state.cursorY - (this.state.cursorHover ? 27 : 15)}px)`,
+        transition: 'transform 0.12s ease-out, width 0.25s ease, height 0.25s ease',
+        opacity: 0.7
+      },
+      cursorEnter: this.cursorEnter,
+      cursorLeave: this.cursorLeave,
+      typedText: this.state.typed,
+      progressStyle: {
+        position: 'fixed', top: 0, left: 0, height: '2px', zIndex: 60,
+        width: (this.state.scrollP * 100) + '%',
+        background: 'linear-gradient(90deg,#3B6EF5,#9B4DFF)'
+      },
+      blobAWrap: {
+        position: 'absolute', top: '-120px', left: '-140px', width: '520px', height: '520px', pointerEvents: 'none',
+        transform: 'translate(' + ((this.state.cursorX - 800) * 0.03) + 'px, ' + ((this.state.cursorY - 400) * 0.03) + 'px)',
+        transition: 'transform 0.5s cubic-bezier(0.2,0.8,0.3,1)'
+      },
+      blobBWrap: {
+        position: 'absolute', bottom: '-160px', right: '-160px', width: '560px', height: '560px', pointerEvents: 'none',
+        transform: 'translate(' + ((this.state.cursorX - 800) * -0.022) + 'px, ' + ((this.state.cursorY - 400) * -0.022) + 'px)',
+        transition: 'transform 0.5s cubic-bezier(0.2,0.8,0.3,1)'
+      },
+      marqueeItems,
+      refServices: this.refServices,
+      refProcess: this.refProcess,
+      refFounders: this.refFounders,
+      refCta: this.refCta,
+      servicesHeadStyle: this.revealStyle(v.services, 0),
+      serviceCards,
+      processSteps,
+      foundersHeadStyle: this.revealStyle(v.founders, 0),
+      founders,
+      ctaBannerStyle: {
+        padding: '120px 48px', background: 'linear-gradient(135deg,#3B6EF5,#9B4DFF,#3B6EF5)', backgroundSize: '220% 220%', animation: 'saikoGrad 9s ease infinite',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
+        ...this.revealStyle(v.cta, 0)
+      },
+      isDark, isLight: !isDark,
+      toggleTheme: this.toggleTheme,
+      toggleTrackStyle: {
+        width: '38px', height: '21px', borderRadius: '100px', background: t.bgAlt,
+        border: '1px solid ' + t.border, position: 'relative', cursor: 'pointer',
+        transition: 'background 0.4s ease, border-color 0.4s ease', flexShrink: 0, padding: 0
+      },
+      toggleThumbStyle: {
+        position: 'absolute', top: '2px', left: isDark ? '18px' : '2px',
+        width: '15px', height: '15px', borderRadius: '50%', background: t.inkSub,
+        transition: 'left 0.25s ease, background 0.4s ease',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: '9px', lineHeight: '1', color: t.bg
+      },
+      toggleIcon: isDark ? '\u263E' : '\u2600'
+    };
+  }
+}
+
+</script>
+</body>
+</html>

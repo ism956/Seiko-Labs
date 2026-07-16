@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @media (pointer: fine) { body[data-saiko] { cursor: none; } }
+    body { margin:0; background:#FAFAFB; }
+    * { box-sizing: border-box; }
+    a { color: inherit; }
+    @keyframes saikoFadeUp { from { opacity:0; transform: translateY(28px);} to { opacity:1; transform: translateY(0);} }
+    @keyframes saikoGrad { 0%,100% { background-position:0% 50%;} 50% { background-position:100% 50%;} }
+    @keyframes saikoShine { from { background-position:125% 0;} to { background-position:-125% 0;} }
+    .saikoStripe { background-image: repeating-linear-gradient(135deg, rgba(10,10,12,0.05) 0px, rgba(10,10,12,0.05) 1px, transparent 1px, transparent 14px); }
+  </style>
+</helmet>
+<div data-saiko="1" style="{{ rootStyle }}">
+
+  <sc-if value="{{ showCursor }}" hint-placeholder-val="{{ false }}">
+    <div style="{{ cursorRingStyle }}"></div>
+    <div style="{{ cursorDotStyle }}"></div>
+  </sc-if>
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px 48px; background:var(--header-bg); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--border-soft);">
+    <a href="index.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="display:flex; flex-direction:column; align-items:center; gap:3px; text-decoration:none;">
+      <svg width="30" height="13" viewBox="0 0 100 40" style="overflow:visible; display:block;"><defs><linearGradient id="lgm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3B6EF5"/><stop offset="1" stop-color="#9B4DFF"/></linearGradient></defs><path d="M10,38 Q50,-6 90,38" fill="none" stroke="url(#lgm)" stroke-width="8" stroke-linecap="round"></path></svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px; letter-spacing:4px; color:var(--ink);">SAIKO <span style="font-weight:400; color:var(--ink-sub);">LABS</span></span>
+    </a>
+    <nav style="display:flex; align-items:center; gap:38px;">
+      <a href="index.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style-hover="color:var(--ink);" style="font-size:14px; font-weight:500; text-decoration:none; color:var(--ink-sub); transition:color 0.25s ease;">Accueil</a>
+      <a href="Services.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style-hover="color:var(--ink);" style="font-size:14px; font-weight:500; text-decoration:none; color:var(--ink-sub); transition:color 0.25s ease;">Services</a>
+      <a href="Realisations.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="font-size:14px; font-weight:600; text-decoration:none; color:var(--ink);">Réalisations</a>
+      <a href="Contact.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style-hover="color:var(--ink);" style="font-size:14px; font-weight:500; text-decoration:none; color:var(--ink-sub); transition:color 0.25s ease;">Contact</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <button onClick="{{ toggleTheme }}" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" aria-label="Changer de thème" style="{{ toggleTrackStyle }}">
+        <div style="{{ toggleThumbStyle }}">{{ toggleIcon }}</div>
+      </button>
+      <a href="Contact.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="text-decoration:none; font-size:14px; font-weight:700; color:#fff; background:linear-gradient(135deg,#3B6EF5,#9B4DFF); padding:11px 22px; border-radius:100px; transition:transform 0.3s cubic-bezier(0.2,0.8,0.3,1);" style-hover="transform:scale(1.05);">Démarrer un projet</a>
+    </div>
+  </header>
+
+  <section style="position:relative; padding:180px 48px 80px; margin:0 auto; text-align:center;"><div style="position:absolute; inset:0; background-image:linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size:52px 52px; -webkit-mask-image:radial-gradient(ellipse 90% 75% at 50% 35%, black 25%, transparent 82%); mask-image:radial-gradient(ellipse 90% 75% at 50% 35%, black 25%, transparent 82%); pointer-events:none;"></div><div style="position:relative; max-width:1000px; margin:0 auto;">
+    <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:2px; color:#9B4DFF; text-transform:uppercase; font-weight:600; opacity:0; animation: saikoFadeUp 0.7s ease forwards 0.05s;">/ réalisations</span>
+    <h1 style-hover="background:linear-gradient(110deg, var(--ink) 25%, #3B6EF5 42%, #9B4DFF 58%, var(--ink) 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:clamp(36px,6vw,64px); font-weight:700; letter-spacing:-0.03em; margin:16px 0 20px; color:var(--ink); opacity:0; animation: saikoFadeUp 0.8s ease forwards 0.15s;">Le type de projets qu'on adore construire.</h1>
+    <p style="font-size:18px; color:var(--ink-sub); line-height:1.6; font-weight:500; max-width:620px; margin:0 auto; opacity:0; animation: saikoFadeUp 0.8s ease forwards 0.28s;">Nos études de cas arrivent bientôt. En attendant, voici les formats de projets sur lesquels nous intervenons le plus.</p>
+    </div>
+  </section>
+
+  <section style="padding:0 48px 140px; max-width:1280px; margin:0 auto;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px;">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
+        <div ref="{{ p.cardRef }}" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="{{ p.style }}">
+          <div class="saikoStripe" style="{{ p.thumbStyle }}">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1px; color:var(--ink-sub); text-transform:uppercase; background:var(--header-bg); padding:5px 10px; border-radius:6px;">visuel à venir</span>
+          </div>
+          <div style="padding:24px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1.5px; color:#9B4DFF; text-transform:uppercase; font-weight:600;">{{ p.category }}</span>
+            <h3 style="font-size:19px; font-weight:700; margin:10px 0 8px; letter-spacing:-0.3px; color:var(--ink);">{{ p.title }}</h3>
+            <p style="font-size:14px; line-height:1.6; color:var(--ink-sub); margin:0; font-weight:500;">{{ p.desc }}</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="{{ ctaBannerStyle }}">
+    <h2 style-hover="background:linear-gradient(110deg, var(--ink) 25%, #3B6EF5 42%, #9B4DFF 58%, var(--ink) 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:clamp(30px,5vw,52px); font-weight:700; letter-spacing:-0.03em; color:#fff; margin:0 0 26px; max-width:720px;" style-hover="background:linear-gradient(110deg, #ffffff 25%, rgba(255,255,255,0.35) 50%, #ffffff 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;">Votre projet pourrait être le prochain.</h2>
+    <a href="Contact.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="text-decoration:none; font-size:16px; font-weight:700; color:#0A0A0C; background:#fff; padding:17px 36px; border-radius:100px;">Démarrer un projet</a>
+  </section>
+
+  <footer style="padding:64px 48px 40px; border-top:1px solid rgba(10,10,12,0.06);">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:40px; padding-bottom:36px;">
+      <div style="max-width:280px;">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:5px; margin-bottom:16px; width:fit-content;">
+          <svg width="34" height="15" viewBox="0 0 100 40" style="overflow:visible;"><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3B6EF5"/><stop offset="1" stop-color="#9B4DFF"/></linearGradient></defs><path d="M10,38 Q50,-6 90,38" fill="none" stroke="url(#lg1)" stroke-width="8" stroke-linecap="round"></path></svg>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px; letter-spacing:4px; color:var(--ink);">SAIKO <span style="font-weight:400; color:var(--ink-sub);">LABS</span></span>
+        </div>
+        <p style="font-size:13.5px; color:var(--ink-sub); line-height:1.6; font-weight:500;">Innover. Automatiser. Scaler.</p>
+      </div>
+      <div style="display:flex; gap:64px; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1.5px; color:#9B4DFF; text-transform:uppercase; margin-bottom:4px;">Navigation</span>
+          <a href="index.dc.html" style-hover="color:var(--ink);" style="font-size:14px; text-decoration:none; color:var(--ink-sub); font-weight:500; transition:color 0.25s ease;">Accueil</a>
+          <a href="Services.dc.html" style-hover="color:var(--ink);" style="font-size:14px; text-decoration:none; color:var(--ink-sub); font-weight:500; transition:color 0.25s ease;">Services</a>
+          <a href="Contact.dc.html" style-hover="color:var(--ink);" style="font-size:14px; text-decoration:none; color:var(--ink-sub); font-weight:500; transition:color 0.25s ease;">Contact</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1.5px; color:#9B4DFF; text-transform:uppercase; margin-bottom:4px;">Contact</span>
+          <span style="font-size:14px; color:var(--ink-sub); font-weight:500;">07 67 92 07 53</span>
+          <span style="font-size:14px; color:var(--ink-sub); font-weight:500;">hello@saikolabs.fr</span>
+          <span style="font-size:14px; color:var(--ink-sub); font-weight:500;">saikolabs.com</span>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1280px; margin:0 auto; padding-top:24px; border-top:1px solid var(--border-soft); font-size:12.5px; color:var(--ink-sub); font-weight:500;">© 2026 Saiko Labs. Tous droits réservés.</div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SAIKO_THEMES = {
+  light: { bg: '#FAFAFB', bgAlt: '#F2F1F5', ink: '#0A0A0C', inkSub: '#6B6B76', cardBg: '#ffffff', border: 'rgba(10,10,12,0.07)', borderSoft: 'rgba(10,10,12,0.06)', borderStrong: 'rgba(10,10,12,0.14)', headerBg: 'rgba(250,250,251,0.78)', grid: 'rgba(10,10,12,0.05)' },
+  dark: { bg: '#080911', bgAlt: '#11131D', ink: '#F1F2F6', inkSub: '#878AA0', cardBg: '#11131D', border: 'rgba(255,255,255,0.08)', borderSoft: 'rgba(255,255,255,0.07)', borderStrong: 'rgba(255,255,255,0.15)', headerBg: 'rgba(8,9,17,0.74)', grid: 'rgba(125,140,255,0.09)' }
+};
+
+class Component extends DCLogic {
+  state = { theme: 'dark', cursorX: 0, cursorY: 0, cursorHover: false, hasFinePointer: false, visible: {} };
+
+  constructor(props) {
+    super(props);
+    if (typeof window !== 'undefined') {
+      try { this.state.theme = window.localStorage.getItem('saiko-theme') || 'dark'; } catch (e) {}
+    }
+    this.observers = {};
+    this.cardRefs = [0,1,2,3,4,5].map(i => (el) => this.observe(el, i));
+    this.cursorEnter = () => this.setState({ cursorHover: true });
+    this.cursorLeave = () => this.setState({ cursorHover: false });
+    this.onMouseMove = (e) => this.setState({ cursorX: e.clientX, cursorY: e.clientY });
+    this.toggleTheme = () => {
+      const next = this.state.theme === 'dark' ? 'light' : 'dark';
+      this.setState({ theme: next });
+      if (typeof window !== 'undefined') { try { window.localStorage.setItem('saiko-theme', next); } catch (e) {} }
+    };
+  }
+
+  observe(el, key) {
+    if (!el || this.observers[key]) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          this.setState(s => ({ visible: { ...s.visible, [key]: true } }));
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    io.observe(el);
+    this.observers[key] = io;
+  }
+
+  componentDidMount() {
+    if (typeof window !== 'undefined') {
+      this.setState({ hasFinePointer: window.matchMedia('(pointer: fine)').matches });
+      window.addEventListener('mousemove', this.onMouseMove);
+    }
+  }
+
+  componentWillUnmount() {
+    if (typeof window !== 'undefined') window.removeEventListener('mousemove', this.onMouseMove);
+    Object.values(this.observers).forEach(io => io.disconnect());
+  }
+
+  renderVals() {
+    const raw = [
+      { category: 'Site web', title: 'Site e-commerce premium', desc: "Boutique en ligne rapide, animée et pensée pour la conversion." },
+      { category: 'Site web', title: 'Site vitrine corporate', desc: "Présence digitale haut de gamme pour une marque exigeante." },
+      { category: 'Intelligence Artificielle', title: 'Assistant IA support client', desc: "Chatbot connecté à la base de connaissances pour répondre 24/7." },
+      { category: 'Automatisation', title: "Automatisation de facturation", desc: "Synchronisation automatique entre CRM, facturation et comptabilité." },
+      { category: 'SaaS', title: 'Plateforme SaaS métier', desc: "Outil multi-utilisateurs pensé pour scaler dès le premier client." },
+      { category: 'Automatisation', title: 'Workflow interne sur-mesure', desc: "Automatisation des tâches répétitives entre plusieurs outils métier." }
+    ];
+
+    const t = SAIKO_THEMES[this.state.theme];
+    const isDark = this.state.theme === 'dark';
+
+    const projects = raw.map((p, i) => {
+      const visible = !!this.state.visible[i];
+      return {
+        category: p.category, title: p.title, desc: p.desc,
+        cardRef: this.cardRefs[i],
+        style: {
+          background: t.cardBg, border: '1px solid ' + t.border, borderRadius: '24px',
+          overflow: 'hidden',
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(30px)',
+          transition: `opacity 0.7s ease ${i % 3 * 0.08}s, transform 0.7s ease ${i % 3 * 0.08}s, background 0.4s ease, border-color 0.4s ease`
+        },
+        thumbStyle: {
+          aspectRatio: '16 / 10', background: t.bgAlt,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.4s ease'
+        }
+      };
+    });
+
+    return {
+      rootStyle: {
+        position: 'relative', fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif",
+        background: t.bg, color: t.ink, overflowX: 'hidden', minHeight: '100vh',
+        transition: 'background 0.4s ease, color 0.4s ease',
+        '--bg': t.bg, '--bg-alt': t.bgAlt, '--ink': t.ink, '--ink-sub': t.inkSub,
+        '--card-bg': t.cardBg, '--border': t.border, '--border-soft': t.borderSoft,
+        '--border-strong': t.borderStrong, '--header-bg': t.headerBg, '--grid': t.grid
+      },
+      showCursor: this.state.hasFinePointer,
+      cursorDotStyle: {
+        position: 'fixed', top: 0, left: 0, width: '8px', height: '8px', borderRadius: '50%',
+        background: t.ink, pointerEvents: 'none', zIndex: 9999,
+        transform: `translate(${this.state.cursorX - 4}px, ${this.state.cursorY - 4}px)`,
+        transition: 'transform 0.05s linear, opacity 0.2s ease',
+        opacity: this.state.cursorHover ? 0 : 1
+      },
+      cursorRingStyle: {
+        position: 'fixed', top: 0, left: 0, borderRadius: '50%', pointerEvents: 'none', zIndex: 9998,
+        border: '1.5px solid #9B4DFF',
+        width: this.state.cursorHover ? '54px' : '30px',
+        height: this.state.cursorHover ? '54px' : '30px',
+        transform: `translate(${this.state.cursorX - (this.state.cursorHover ? 27 : 15)}px, ${this.state.cursorY - (this.state.cursorHover ? 27 : 15)}px)`,
+        transition: 'transform 0.12s ease-out, width 0.25s ease, height 0.25s ease',
+        opacity: 0.7
+      },
+      cursorEnter: this.cursorEnter,
+      cursorLeave: this.cursorLeave,
+      projects,
+      ctaBannerStyle: {
+        padding: '120px 48px', background: 'linear-gradient(135deg,#3B6EF5,#9B4DFF,#3B6EF5)', backgroundSize: '220% 220%', animation: 'saikoGrad 9s ease infinite',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'
+      },
+      isDark, isLight: !isDark,
+      toggleTheme: this.toggleTheme,
+      toggleTrackStyle: {
+        width: '38px', height: '21px', borderRadius: '100px', background: t.bgAlt,
+        border: '1px solid ' + t.border, position: 'relative', cursor: 'pointer',
+        transition: 'background 0.4s ease, border-color 0.4s ease', flexShrink: 0, padding: 0
+      },
+      toggleThumbStyle: {
+        position: 'absolute', top: '2px', left: isDark ? '18px' : '2px',
+        width: '15px', height: '15px', borderRadius: '50%', background: t.inkSub,
+        transition: 'left 0.25s ease, background 0.4s ease',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: '9px', lineHeight: '1', color: t.bg
+      },
+      toggleIcon: isDark ? '\u263E' : '\u2600'
+    };
+  }
+}
+
+</script>
+</body>
+</html>

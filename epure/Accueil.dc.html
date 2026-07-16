@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; background:#050609; }
+    * { box-sizing: border-box; }
+    a { color:inherit; }
+    @keyframes epDraw { to { stroke-dashoffset: 0; } }
+    @keyframes epFade { from { opacity:0; transform:translateY(26px);} to { opacity:1; transform:translateY(0);} }
+    @keyframes epShine { from { background-position:125% 0;} to { background-position:-125% 0;} }
+    @keyframes epPulse { 0%,100% { opacity:0.4;} 50% { opacity:1;} }
+    @keyframes epGlow { 0%,100% { transform:translate(-50%,0) scale(1);} 50% { transform:translate(-50%,30px) scale(1.12);} }
+  </style>
+</helmet>
+<div style="{{ rootStyle }}">
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:20px 44px; background:var(--header-bg); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px);">
+    <a href="Accueil.dc.html" style="display:flex; flex-direction:column; align-items:center; gap:3px; text-decoration:none;">
+      <svg width="34" height="15" viewBox="0 0 100 40" style="overflow:visible;">
+        <defs>
+          <linearGradient id="eplg" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#3B6EF5"/>
+            <stop offset="1" stop-color="#9B4DFF"/>
+          </linearGradient>
+        </defs>
+        <path d="M10,38 Q50,-6 90,38" fill="none" stroke="url(#eplg)" stroke-width="7" stroke-linecap="round"></path>
+      </svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:11px; letter-spacing:4px; color:var(--ink);">SAIKO <span style="font-weight:400; color:var(--sub);">LABS</span></span>
+    </a>
+    <nav style="display:flex; align-items:center; gap:30px;">
+      <a href="Services.dc.html" style-hover="color:var(--ink);" style="font-size:13px; font-weight:500; text-decoration:none; color:var(--sub); transition:color 0.25s ease;">Services</a>
+      <a href="Realisations.dc.html" style-hover="color:var(--ink);" style="font-size:13px; font-weight:500; text-decoration:none; color:var(--sub); transition:color 0.25s ease;">Réalisations</a>
+      <a href="Contact.dc.html" style-hover="color:var(--ink);" style="font-size:13px; font-weight:500; text-decoration:none; color:var(--sub); transition:color 0.25s ease;">Contact</a>
+      <button onClick="{{ toggleTheme }}" aria-label="Changer de thème" style="{{ toggleTrackStyle }}">
+        <div style="{{ toggleThumbStyle }}">{{ toggleIcon }}</div>
+      </button>
+    </nav>
+  </header>
+
+  <section style="min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:120px 24px; position:relative; overflow:hidden;">
+    <div style="position:absolute; top:20%; left:50%; width:640px; height:640px; border-radius:50%; background:radial-gradient(circle, var(--glow), transparent 65%); animation: epGlow 12s ease-in-out infinite; pointer-events:none;"></div>
+    <div style="position:absolute; inset:0; background-image:linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size:56px 56px; -webkit-mask-image:radial-gradient(ellipse 80% 65% at 50% 40%, black 20%, transparent 78%); mask-image:radial-gradient(ellipse 80% 65% at 50% 40%, black 20%, transparent 78%); pointer-events:none;"></div>
+    <svg width="200" height="84" viewBox="0 0 100 40" style="overflow:visible; margin-bottom:38px; position:relative;">
+      <path d="M10,38 Q50,-6 90,38" fill="none" stroke="url(#eplg)" stroke-width="6" stroke-linecap="round" stroke-dasharray="160" stroke-dashoffset="160" style="animation: epDraw 1.6s cubic-bezier(0.28,0.11,0.32,1) forwards 0.2s;"></path>
+    </svg>
+    <h1 style="position:relative; font-size:clamp(48px,8vw,116px); font-weight:700; letter-spacing:-0.035em; line-height:1.02; margin:0 0 24px; max-width:960px; color:var(--ink); opacity:0; animation: epFade 1s cubic-bezier(0.28,0.11,0.32,1) forwards 0.5s;">Innover.<br/><span style="background:linear-gradient(135deg,#3B6EF5,#9B4DFF); -webkit-background-clip:text; background-clip:text; color:transparent;">Automatiser.</span><br/>Scaler.</h1>
+    <p style="position:relative; font-size:19px; color:var(--sub); font-weight:400; margin:0 0 42px; opacity:0; animation: epFade 1s cubic-bezier(0.28,0.11,0.32,1) forwards 0.75s;">Sites. IA. Automatisations. SaaS.</p>
+    <a href="Contact.dc.html" style="{{ heroBtnStyle }}">Démarrer</a>
+    <span style="position:absolute; bottom:34px; left:50%; transform:translateX(-50%); font-size:15px; color:var(--sub); animation: epPulse 2.4s ease-in-out infinite;">↓</span>
+  </section>
+
+  <sc-for list="{{ words }}" as="w" hint-placeholder-count="4">
+    <section data-ep="svc" style="min-height:82vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:60px 24px;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:2px; color:#9B4DFF; margin-bottom:22px;">{{ w.num }}</span>
+      <h2 style="{{ w.style }}" style-hover="background:linear-gradient(110deg, var(--ink) 25%, #3B6EF5 42%, #9B4DFF 58%, var(--ink) 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:epShine 1.6s linear infinite;">{{ w.title }}</h2>
+      <p style="{{ w.subStyle }}">{{ w.sub }}</p>
+    </section>
+  </sc-for>
+
+  <section data-ep="cta" style="min-height:70vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:80px 24px;">
+    <h2 style="{{ ctaStyle }}">Un projet ?</h2>
+    <a href="Contact.dc.html" style="{{ ctaBtnStyle }}">Parlons-en</a>
+  </section>
+
+  <footer style="padding:40px 44px; display:flex; align-items:center; justify-content:center; gap:12px; border-top:1px solid var(--border);">
+    <span style="font-size:13px; color:var(--sub);">hello@saikolabs.fr</span>
+    <span style="font-size:13px; color:var(--border-ink);">·</span>
+    <span style="font-size:13px; color:var(--sub);">07 67 92 07 53</span>
+    <span style="font-size:13px; color:var(--border-ink);">·</span>
+    <span style="font-size:13px; color:var(--sub);">© 2026 Saiko Labs</span>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const EP_THEMES = {
+  light: { bg: '#FAFAFA', ink: '#0A0A0C', sub: '#86868B', alt: '#F2F1F5', border: 'rgba(10,10,12,0.07)', borderInk: '#D2D2D7', headerBg: 'rgba(250,250,250,0.72)', grid: 'rgba(10,10,12,0.05)', glow: 'rgba(120,110,250,0.10)' },
+  dark: { bg: '#050609', ink: '#F1F2F6', sub: '#6E7180', alt: '#101218', border: 'rgba(255,255,255,0.08)', borderInk: '#2A2C36', headerBg: 'rgba(5,6,9,0.6)', grid: 'rgba(125,140,255,0.05)', glow: 'rgba(90,90,245,0.16)' }
+};
+
+class Component extends DCLogic {
+  state = { theme: 'dark', visible: {} };
+
+  constructor(props) {
+    super(props);
+    if (typeof window !== 'undefined') {
+      try { this.state.theme = window.localStorage.getItem('saiko-epure-theme') || 'dark'; } catch (e) {}
+    }
+    this.observers = {};
+    this.toggleTheme = () => {
+      const next = this.state.theme === 'dark' ? 'light' : 'dark';
+      this.setState({ theme: next });
+      if (typeof window !== 'undefined') { try { window.localStorage.setItem('saiko-epure-theme', next); } catch (e) {} }
+    };
+  }
+
+  observe(el, key) {
+    if (!el || this.observers[key]) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          this.setState(s => ({ visible: { ...s.visible, [key]: true } }));
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.35 });
+    io.observe(el);
+    this.observers[key] = io;
+  }
+
+  componentDidMount() {
+    this.mountTries = 0;
+    this.tryObserve = () => {
+      const secs = document.querySelectorAll('section[data-ep]');
+      if (secs.length < 5 && this.mountTries++ < 25) { this.obsTimer = setTimeout(this.tryObserve, 200); return; }
+      secs.forEach((el, i) => this.observe(el, i));
+    };
+    this.tryObserve();
+  }
+
+  componentWillUnmount() {
+    if (this.obsTimer) clearTimeout(this.obsTimer);
+    Object.values(this.observers).forEach(io => io.disconnect());
+  }
+
+  bigStyle(visible, ink) {
+    return {
+      fontSize: 'clamp(52px,9vw,140px)', fontWeight: 700, letterSpacing: '-0.035em',
+      lineHeight: 1, margin: '0 0 18px', color: ink,
+      opacity: visible ? 1 : 0,
+      transform: visible ? 'translateY(0)' : 'translateY(36px)',
+      transition: 'opacity 1s cubic-bezier(0.28,0.11,0.32,1), transform 1s cubic-bezier(0.28,0.11,0.32,1)'
+    };
+  }
+
+  renderVals() {
+    const t = EP_THEMES[this.state.theme];
+    const isDark = this.state.theme === 'dark';
+    const v = this.state.visible;
+    const raw = [
+      { num: '/01', title: 'Sites web.', sub: 'Premium, rapides, faits pour convertir.' },
+      { num: '/02', title: 'IA.', sub: 'Des assistants qui travaillent pour vous.' },
+      { num: '/03', title: 'Automatisations.', sub: 'Vos outils connectés, vos journées allégées.' },
+      { num: '/04', title: 'SaaS.', sub: 'Des plateformes qui grandissent avec vous.' }
+    ];
+    return {
+      rootStyle: {
+        fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif",
+        background: t.bg, color: t.ink, minHeight: '100vh', overflowX: 'hidden',
+        transition: 'background 0.4s ease, color 0.4s ease',
+        '--bg': t.bg, '--ink': t.ink, '--sub': t.sub, '--alt': t.alt, '--border': t.border,
+        '--border-ink': t.borderInk, '--header-bg': t.headerBg, '--grid': t.grid, '--glow': t.glow
+      },
+      toggleTheme: this.toggleTheme,
+      toggleTrackStyle: {
+        width: '38px', height: '21px', borderRadius: '100px', background: t.alt,
+        border: '1px solid ' + t.border, position: 'relative', cursor: 'pointer',
+        transition: 'background 0.4s ease, border-color 0.4s ease', flexShrink: 0, padding: 0
+      },
+      toggleThumbStyle: {
+        position: 'absolute', top: '2px', left: isDark ? '18px' : '2px',
+        width: '15px', height: '15px', borderRadius: '50%', background: t.sub,
+        transition: 'left 0.25s ease, background 0.4s ease',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: '9px', lineHeight: '1', color: t.bg
+      },
+      toggleIcon: isDark ? '\u263E' : '\u2600',
+      heroBtnStyle: {
+        position: 'relative', textDecoration: 'none', fontSize: '15px', fontWeight: 600,
+        color: t.bg, background: t.ink, padding: '14px 30px', borderRadius: '100px',
+        opacity: 0, animation: 'epFade 1s cubic-bezier(0.28,0.11,0.32,1) forwards 0.9s',
+        transition: 'background 0.4s ease, color 0.4s ease'
+      },
+      words: raw.map((w, i) => ({
+        ...w,
+        style: this.bigStyle(!!v[i], t.ink),
+        subStyle: {
+          fontSize: '18px', color: t.sub, fontWeight: 400, margin: 0, maxWidth: '440px',
+          opacity: v[i] ? 1 : 0,
+          transition: 'opacity 1.2s cubic-bezier(0.28,0.11,0.32,1) 0.25s'
+        }
+      })),
+      ctaStyle: {
+        ...this.bigStyle(!!v[4], t.ink),
+        background: 'linear-gradient(135deg,#3B6EF5,#9B4DFF)',
+        WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent',
+        marginBottom: '34px'
+      },
+      ctaBtnStyle: {
+        textDecoration: 'none', fontSize: '16px', fontWeight: 600, color: t.bg,
+        background: t.ink, padding: '15px 34px', borderRadius: '100px',
+        opacity: v[4] ? 1 : 0,
+        transition: 'opacity 1.2s cubic-bezier(0.28,0.11,0.32,1) 0.3s, background 0.4s ease, color 0.4s ease'
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

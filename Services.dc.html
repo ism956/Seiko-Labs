@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @media (pointer: fine) { body[data-saiko] { cursor: none; } }
+    body { margin:0; background:#FAFAFB; }
+    * { box-sizing: border-box; }
+    a { color: inherit; }
+    @keyframes saikoFadeUp { from { opacity:0; transform: translateY(28px);} to { opacity:1; transform: translateY(0);} }
+    @keyframes saikoGrad { 0%,100% { background-position:0% 50%;} 50% { background-position:100% 50%;} }
+    @keyframes saikoShine { from { background-position:125% 0;} to { background-position:-125% 0;} }
+    @keyframes saikoDraw { to { stroke-dashoffset: 0; } }
+    @keyframes saikoPulse { 0%,100% { opacity:0.55;} 50% { opacity:1;} }
+    @keyframes saikoSpin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+  </style>
+</helmet>
+<div data-saiko="1" style="{{ rootStyle }}">
+
+  <sc-if value="{{ showCursor }}" hint-placeholder-val="{{ false }}">
+    <div style="{{ cursorRingStyle }}"></div>
+    <div style="{{ cursorDotStyle }}"></div>
+  </sc-if>
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px 48px; background:var(--header-bg); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--border-soft);">
+    <a href="index.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="display:flex; flex-direction:column; align-items:center; gap:3px; text-decoration:none;">
+      <svg width="30" height="13" viewBox="0 0 100 40" style="overflow:visible; display:block;"><defs><linearGradient id="lgm" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3B6EF5"/><stop offset="1" stop-color="#9B4DFF"/></linearGradient></defs><path d="M10,38 Q50,-6 90,38" fill="none" stroke="url(#lgm)" stroke-width="8" stroke-linecap="round"></path></svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px; letter-spacing:4px; color:var(--ink);">SAIKO <span style="font-weight:400; color:var(--ink-sub);">LABS</span></span>
+    </a>
+    <nav style="display:flex; align-items:center; gap:38px;">
+      <a href="index.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style-hover="color:var(--ink);" style="font-size:14px; font-weight:500; text-decoration:none; color:var(--ink-sub); transition:color 0.25s ease;">Accueil</a>
+      <a href="Services.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="font-size:14px; font-weight:600; text-decoration:none; color:var(--ink);">Services</a>
+      <a href="Realisations.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style-hover="color:var(--ink);" style="font-size:14px; font-weight:500; text-decoration:none; color:var(--ink-sub); transition:color 0.25s ease;">Réalisations</a>
+      <a href="Contact.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style-hover="color:var(--ink);" style="font-size:14px; font-weight:500; text-decoration:none; color:var(--ink-sub); transition:color 0.25s ease;">Contact</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <button onClick="{{ toggleTheme }}" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" aria-label="Changer de thème" style="{{ toggleTrackStyle }}">
+        <div style="{{ toggleThumbStyle }}">{{ toggleIcon }}</div>
+      </button>
+      <a href="Contact.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="text-decoration:none; font-size:14px; font-weight:700; color:#fff; background:linear-gradient(135deg,#3B6EF5,#9B4DFF); padding:11px 22px; border-radius:100px; transition:transform 0.3s cubic-bezier(0.2,0.8,0.3,1);" style-hover="transform:scale(1.05);">Démarrer un projet</a>
+    </div>
+  </header>
+
+  <section style="position:relative; padding:180px 48px 100px; margin:0 auto; text-align:center;"><div style="position:absolute; inset:0; background-image:linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size:52px 52px; -webkit-mask-image:radial-gradient(ellipse 90% 75% at 50% 35%, black 25%, transparent 82%); mask-image:radial-gradient(ellipse 90% 75% at 50% 35%, black 25%, transparent 82%); pointer-events:none;"></div><div style="position:relative; max-width:1000px; margin:0 auto;">
+    <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:2px; color:#9B4DFF; text-transform:uppercase; font-weight:600; opacity:0; animation: saikoFadeUp 0.7s ease forwards 0.05s;">/ services — ce que l'on fait</span>
+    <h1 style-hover="background:linear-gradient(110deg, var(--ink) 25%, #3B6EF5 42%, #9B4DFF 58%, var(--ink) 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:clamp(36px,6vw,68px); font-weight:700; letter-spacing:-0.03em; margin:16px 0 20px; color:var(--ink); opacity:0; animation: saikoFadeUp 0.8s ease forwards 0.15s;">Quatre expertises, une seule équipe d'ingénieurs.</h1>
+    <p style="font-size:18px; color:var(--ink-sub); line-height:1.6; font-weight:500; max-width:600px; margin:0 auto; opacity:0; animation: saikoFadeUp 0.8s ease forwards 0.28s;">Pas d'agence-usine, pas de sous-traitance en cascade : chaque projet est conçu et codé en interne, de bout en bout.</p>
+    </div>
+  </section>
+
+  <sc-for list="{{ services }}" as="svc" hint-placeholder-count="4">
+    <section ref="{{ svc.sectionRef }}" style="{{ svc.wrapStyle }}">
+      <div style="{{ svc.gridStyle }}">
+        <div style="{{ svc.textColStyle }}">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:1.5px; color:#9B4DFF; text-transform:uppercase; font-weight:600;">{{ svc.tag }}</span>
+          <h2 style-hover="background:linear-gradient(110deg, var(--ink) 25%, #3B6EF5 42%, #9B4DFF 58%, var(--ink) 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:clamp(26px,3.4vw,40px); font-weight:700; letter-spacing:-0.025em; margin:14px 0 18px; color:var(--ink);">{{ svc.title }}</h2>
+          <p style="font-size:16px; line-height:1.7; color:var(--ink-sub); font-weight:500; margin:0 0 26px; max-width:460px;">{{ svc.desc }}</p>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <sc-for list="{{ svc.points }}" as="pt" hint-placeholder-count="3">
+              <div style="display:flex; align-items:flex-start; gap:12px;">
+                <span style="width:6px; height:6px; border-radius:50%; background:linear-gradient(135deg,#3B6EF5,#9B4DFF); margin-top:8px; flex-shrink:0;"></span>
+                <span style="font-size:15px; color:var(--ink); font-weight:600;">{{ pt }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="{{ svc.visualStyle }}">
+          <div style="{{ svc.visualInnerStyle }}"></div>
+          <div style="{{ svc.ringStyle }}"></div>
+        </div>
+      </div>
+    </section>
+  </sc-for>
+
+  <section style="{{ ctaBannerStyle }}">
+    <h2 style-hover="background:linear-gradient(110deg, var(--ink) 25%, #3B6EF5 42%, #9B4DFF 58%, var(--ink) 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; font-size:clamp(30px,5vw,52px); font-weight:700; letter-spacing:-0.03em; color:#fff; margin:0 0 26px; max-width:720px;" style-hover="background:linear-gradient(110deg, #ffffff 25%, rgba(255,255,255,0.35) 50%, #ffffff 75%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:saikoShine 1.6s linear infinite;">Un projet en tête ? Parlons technique.</h2>
+    <a href="Contact.dc.html" onMouseEnter="{{ cursorEnter }}" onMouseLeave="{{ cursorLeave }}" style="text-decoration:none; font-size:16px; font-weight:700; color:#0A0A0C; background:#fff; padding:17px 36px; border-radius:100px;">Démarrer un projet</a>
+  </section>
+
+  <footer style="padding:64px 48px 40px; border-top:1px solid rgba(10,10,12,0.06);">
+    <div style="max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:40px; padding-bottom:36px;">
+      <div style="max-width:280px;">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:5px; margin-bottom:16px; width:fit-content;">
+          <svg width="34" height="15" viewBox="0 0 100 40" style="overflow:visible;"><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3B6EF5"/><stop offset="1" stop-color="#9B4DFF"/></linearGradient></defs><path d="M10,38 Q50,-6 90,38" fill="none" stroke="url(#lg1)" stroke-width="8" stroke-linecap="round"></path></svg>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px; letter-spacing:4px; color:var(--ink);">SAIKO <span style="font-weight:400; color:var(--ink-sub);">LABS</span></span>
+        </div>
+        <p style="font-size:13.5px; color:var(--ink-sub); line-height:1.6; font-weight:500;">Innover. Automatiser. Scaler.</p>
+      </div>
+      <div style="display:flex; gap:64px; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1.5px; color:#9B4DFF; text-transform:uppercase; margin-bottom:4px;">Navigation</span>
+          <a href="index.dc.html" style-hover="color:var(--ink);" style="font-size:14px; text-decoration:none; color:var(--ink-sub); font-weight:500; transition:color 0.25s ease;">Accueil</a>
+          <a href="Realisations.dc.html" style-hover="color:var(--ink);" style="font-size:14px; text-decoration:none; color:var(--ink-sub); font-weight:500; transition:color 0.25s ease;">Réalisations</a>
+          <a href="Contact.dc.html" style-hover="color:var(--ink);" style="font-size:14px; text-decoration:none; color:var(--ink-sub); font-weight:500; transition:color 0.25s ease;">Contact</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1.5px; color:#9B4DFF; text-transform:uppercase; margin-bottom:4px;">Contact</span>
+          <span style="font-size:14px; color:var(--ink-sub); font-weight:500;">07 67 92 07 53</span>
+          <span style="font-size:14px; color:var(--ink-sub); font-weight:500;">hello@saikolabs.fr</span>
+          <span style="font-size:14px; color:var(--ink-sub); font-weight:500;">saikolabs.com</span>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1280px; margin:0 auto; padding-top:24px; border-top:1px solid var(--border-soft); font-size:12.5px; color:var(--ink-sub); font-weight:500;">© 2026 Saiko Labs. Tous droits réservés.</div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SAIKO_THEMES = {
+  light: { bg: '#FAFAFB', bgAlt: '#F2F1F5', ink: '#0A0A0C', inkSub: '#6B6B76', cardBg: '#ffffff', border: 'rgba(10,10,12,0.07)', borderSoft: 'rgba(10,10,12,0.06)', borderStrong: 'rgba(10,10,12,0.14)', headerBg: 'rgba(250,250,251,0.78)', grid: 'rgba(10,10,12,0.05)' },
+  dark: { bg: '#080911', bgAlt: '#11131D', ink: '#F1F2F6', inkSub: '#878AA0', cardBg: '#11131D', border: 'rgba(255,255,255,0.08)', borderSoft: 'rgba(255,255,255,0.07)', borderStrong: 'rgba(255,255,255,0.15)', headerBg: 'rgba(8,9,17,0.74)', grid: 'rgba(125,140,255,0.09)' }
+};
+
+class Component extends DCLogic {
+  state = {
+    theme: 'dark',
+    cursorX: 0, cursorY: 0, cursorHover: false, hasFinePointer: false,
+    visible: {}
+  };
+
+  constructor(props) {
+    super(props);
+    if (typeof window !== 'undefined') {
+      try { this.state.theme = window.localStorage.getItem('saiko-theme') || 'dark'; } catch (e) {}
+    }
+    this.observers = {};
+    this.sectionRefs = [0,1,2,3].map(i => (el) => this.observe(el, i));
+    this.cursorEnter = () => this.setState({ cursorHover: true });
+    this.cursorLeave = () => this.setState({ cursorHover: false });
+    this.onMouseMove = (e) => this.setState({ cursorX: e.clientX, cursorY: e.clientY });
+    this.toggleTheme = () => {
+      const next = this.state.theme === 'dark' ? 'light' : 'dark';
+      this.setState({ theme: next });
+      if (typeof window !== 'undefined') { try { window.localStorage.setItem('saiko-theme', next); } catch (e) {} }
+    };
+  }
+
+  observe(el, key) {
+    if (!el || this.observers[key]) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          this.setState(s => ({ visible: { ...s.visible, [key]: true } }));
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    io.observe(el);
+    this.observers[key] = io;
+  }
+
+  componentDidMount() {
+    if (typeof window !== 'undefined') {
+      this.setState({ hasFinePointer: window.matchMedia('(pointer: fine)').matches });
+      window.addEventListener('mousemove', this.onMouseMove);
+    }
+  }
+
+  componentWillUnmount() {
+    if (typeof window !== 'undefined') window.removeEventListener('mousemove', this.onMouseMove);
+    Object.values(this.observers).forEach(io => io.disconnect());
+  }
+
+  renderVals() {
+    const t = SAIKO_THEMES[this.state.theme];
+    const isDark = this.state.theme === 'dark';
+    const raw = [
+      {
+        tag: 'Sites web premium',
+        title: 'Des sites qui se distinguent au premier scroll.',
+        desc: "Vitrines, e-commerce, plateformes de contenu : chaque site est designé et développé sur-mesure, optimisé pour la vitesse et animé avec précision.",
+        points: ['Design sur-mesure, zéro template', 'Animations & micro-interactions soignées', 'Performance et Core Web Vitals au top']
+      },
+      {
+        tag: 'Référencement naturel',
+        title: 'Être trouvé, pas juste être en ligne.',
+        desc: "Un site premium sans visibilité ne sert à rien. On structure, on optimise et on suit le référencement pour que vos clients vous trouvent en premier.",
+        points: ['Architecture technique SEO-first', 'Contenu et balisage optimisés', 'Suivi de positionnement dans la durée']
+      },
+      {
+        tag: 'Intelligence Artificielle',
+        title: "L'IA au service de vos clients et de vos équipes.",
+        desc: "Chatbots, assistants métiers, intégrations sur-mesure : on connecte l'IA à vos outils existants pour automatiser sans complexifier.",
+        points: ['Assistants et chatbots sur-mesure', 'Intégration à vos outils existants', 'Automatisation de la relation client']
+      },
+      {
+        tag: 'Automatisations & SaaS',
+        title: 'Des workflows qui tournent seuls, des plateformes qui grandissent.',
+        desc: "On connecte vos outils entre eux et on construit, si besoin, votre propre plateforme SaaS — pensée dès le départ pour scaler.",
+        points: ['Automatisation de process internes', 'Architecture cloud scalable', 'Plateformes SaaS multi-utilisateurs']
+      }
+    ];
+
+    const services = raw.map((s, i) => {
+      const visible = !!this.state.visible[i];
+      const reversed = i % 2 === 1;
+      return {
+        tag: s.tag, title: s.title, desc: s.desc, points: s.points,
+        sectionRef: this.sectionRefs[i],
+        wrapStyle: { padding: '64px 48px', maxWidth: '1280px', margin: '0 auto' },
+        gridStyle: {
+          display: 'grid',
+          gridTemplateColumns: '1.1fr 0.9fr',
+          gap: '64px',
+          alignItems: 'center',
+          direction: reversed ? 'rtl' : 'ltr'
+        },
+        textColStyle: {
+          direction: 'ltr',
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(30px)',
+          transition: 'opacity 0.8s ease, transform 0.8s ease'
+        },
+        visualStyle: {
+          direction: 'ltr',
+          position: 'relative',
+          aspectRatio: '4 / 3',
+          borderRadius: '24px',
+          background: i % 2 === 0 ? '#0A0A0C' : t.bgAlt,
+          transition: 'opacity 0.9s ease 0.1s, transform 0.9s ease 0.1s, background 0.4s ease',
+          overflow: 'hidden',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'scale(1)' : 'scale(0.92)',
+          transition: 'opacity 0.9s ease 0.1s, transform 0.9s ease 0.1s'
+        },
+        visualInnerStyle: {
+          width: '120px', height: '120px', borderRadius: '28px',
+          background: 'linear-gradient(135deg,#3B6EF5,#9B4DFF)',
+          animation: visible ? 'saikoPulse 3s ease-in-out infinite' : 'none'
+        },
+        ringStyle: {
+          position: 'absolute', width: '220px', height: '220px', borderRadius: '50%',
+          border: '1px dashed rgba(155,77,255,0.35)',
+          animation: 'saikoSpin 18s linear infinite'
+        }
+      };
+    });
+
+    return {
+      rootStyle: {
+        position: 'relative', fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif",
+        background: t.bg, color: t.ink, overflowX: 'hidden', minHeight: '100vh',
+        transition: 'background 0.4s ease, color 0.4s ease',
+        '--bg': t.bg, '--bg-alt': t.bgAlt, '--ink': t.ink, '--ink-sub': t.inkSub,
+        '--card-bg': t.cardBg, '--border': t.border, '--border-soft': t.borderSoft,
+        '--border-strong': t.borderStrong, '--header-bg': t.headerBg, '--grid': t.grid
+      },
+      showCursor: this.state.hasFinePointer,
+      cursorDotStyle: {
+        position: 'fixed', top: 0, left: 0, width: '8px', height: '8px', borderRadius: '50%',
+        background: t.ink, pointerEvents: 'none', zIndex: 9999,
+        transform: `translate(${this.state.cursorX - 4}px, ${this.state.cursorY - 4}px)`,
+        transition: 'transform 0.05s linear, opacity 0.2s ease',
+        opacity: this.state.cursorHover ? 0 : 1
+      },
+      cursorRingStyle: {
+        position: 'fixed', top: 0, left: 0, borderRadius: '50%', pointerEvents: 'none', zIndex: 9998,
+        border: '1.5px solid #9B4DFF',
+        width: this.state.cursorHover ? '54px' : '30px',
+        height: this.state.cursorHover ? '54px' : '30px',
+        transform: `translate(${this.state.cursorX - (this.state.cursorHover ? 27 : 15)}px, ${this.state.cursorY - (this.state.cursorHover ? 27 : 15)}px)`,
+        transition: 'transform 0.12s ease-out, width 0.25s ease, height 0.25s ease',
+        opacity: 0.7
+      },
+      cursorEnter: this.cursorEnter,
+      cursorLeave: this.cursorLeave,
+      services,
+      ctaBannerStyle: {
+        padding: '120px 48px', background: 'linear-gradient(135deg,#3B6EF5,#9B4DFF,#3B6EF5)', backgroundSize: '220% 220%', animation: 'saikoGrad 9s ease infinite',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'
+      },
+      isDark, isLight: !isDark,
+      toggleTheme: this.toggleTheme,
+      toggleTrackStyle: {
+        width: '38px', height: '21px', borderRadius: '100px', background: t.bgAlt,
+        border: '1px solid ' + t.border, position: 'relative', cursor: 'pointer',
+        transition: 'background 0.4s ease, border-color 0.4s ease', flexShrink: 0, padding: 0
+      },
+      toggleThumbStyle: {
+        position: 'absolute', top: '2px', left: isDark ? '18px' : '2px',
+        width: '15px', height: '15px', borderRadius: '50%', background: t.inkSub,
+        transition: 'left 0.25s ease, background 0.4s ease',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: '9px', lineHeight: '1', color: t.bg
+      },
+      toggleIcon: isDark ? '\u263E' : '\u2600'
+    };
+  }
+}
+
+</script>
+</body>
+</html>
