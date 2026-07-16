@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ShineHeading } from "@/components/ShineHeading";
 
 interface CtaBannerProps {
   title: string;
@@ -8,7 +9,7 @@ interface CtaBannerProps {
 export function CtaBanner({ title, compact = false }: CtaBannerProps) {
   return (
     <section className={`cta-banner${compact ? " cta-banner-compact" : ""}`}>
-      <h2 className="shine-heading shine-heading-light">{title}</h2>
+      <ShineHeading className="shine-heading-light">{title}</ShineHeading>
       <Link className="white-button" href="/contact">
         Démarrer un projet
       </Link>

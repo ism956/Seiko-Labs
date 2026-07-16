@@ -360,7 +360,7 @@ a {
   animation: fade-up 0.9s ease forwards 0.25s;
 }
 
-.home-hero h1 span {
+.home-hero h1 .shine-accent {
   color: transparent;
   background: linear-gradient(135deg, #3b6ef5, #9b4dff);
   background-clip: text;
@@ -478,21 +478,28 @@ a {
 }
 
 .shine-heading {
-  transition: color 0.2s ease;
+  --sweep-base: var(--ink);
+  --sweep-from: #3b6ef5;
+  --sweep-mid: #6c5cf4;
+  --sweep-to: #9b4dff;
+  color: var(--sweep-base);
 }
 
-.shine-heading:hover {
-  color: transparent;
-  background: linear-gradient(110deg, var(--ink) 25%, #3b6ef5 42%, #9b4dff 58%, var(--ink) 75%);
-  background-size: 250% 100%;
-  background-clip: text;
-  animation: shine 1.6s linear infinite;
+.shine-word {
+  display: inline-block;
 }
 
-.shine-heading-light:hover {
-  background: linear-gradient(110deg, #fff 25%, rgba(255, 255, 255, 0.35) 50%, #fff 75%);
-  background-size: 250% 100%;
-  background-clip: text;
+.shine-heading-light {
+  --sweep-base: #fff;
+  --sweep-from: #86a8ff;
+  --sweep-mid: #a88fff;
+  --sweep-to: #c9a2ff;
+}
+
+.cta-banner .shine-heading-light {
+  --sweep-from: #0a0b16;
+  --sweep-mid: #131230;
+  --sweep-to: #221448;
 }
 
 .reveal {
@@ -1196,11 +1203,6 @@ a {
 @keyframes gradient-shift {
   0%, 100% { background-position: 0 50%; }
   50% { background-position: 100% 50%; }
-}
-
-@keyframes shine {
-  from { background-position: 125% 0; }
-  to { background-position: -125% 0; }
 }
 
 @keyframes marquee {

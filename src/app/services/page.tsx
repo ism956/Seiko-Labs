@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CtaBanner } from "@/components/CtaBanner";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { ShineHeading } from "@/components/ShineHeading";
 import { services } from "@/lib/site-data";
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function ServicesPage() {
             <div className="service-layout">
               <Reveal className="service-copy">
                 <span className="eyebrow">{service.tag}</span>
-                <h2 className="shine-heading">{service.title}</h2>
+                <ShineHeading>{service.title}</ShineHeading>
                 <p>{service.description}</p>
                 <ul>
                   {service.points.map((point) => <li key={point}>{point}</li>)}

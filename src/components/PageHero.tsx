@@ -1,3 +1,5 @@
+import { ShineHeading } from "@/components/ShineHeading";
+
 interface PageHeroProps {
   eyebrow: string;
   title: string;
@@ -11,7 +13,7 @@ export function PageHero({ eyebrow, title, description, compact = false }: PageH
       <div className="grid-background" />
       <div className="page-hero-inner">
         <span className="eyebrow page-hero-eyebrow">{eyebrow}</span>
-        <h1 className="shine-heading">{title}</h1>
+        <ShineHeading as="h1">{title}</ShineHeading>
         <p>{description}</p>
       </div>
     </section>

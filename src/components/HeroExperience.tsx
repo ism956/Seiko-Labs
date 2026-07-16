@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { ShineHeading } from "@/components/ShineHeading";
 
 const command = "deploy premium-web · seo · ia · saas";
 
@@ -54,9 +55,9 @@ export function HeroExperience() {
           <i>▍</i>
         </span>
       </div>
-      <h1>
-        On code la couche technique qui fait <span>scaler</span> votre business.
-      </h1>
+      <ShineHeading as="h1" accentWord="scaler">
+        On code la couche technique qui fait scaler votre business.
+      </ShineHeading>
       <p>Sites premium, IA, automatisations et SaaS — codés par des ingénieurs.</p>
       <div className="hero-actions">
         <Link className="primary-button hero-primary" href="/contact">

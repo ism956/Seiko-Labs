@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
+import { ShineHeading } from "@/components/ShineHeading";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -19,7 +20,7 @@ export default function ContactPage() {
       <div className="contact-layout">
         <div className="contact-intro">
           <span className="eyebrow intro-animate intro-delay-1">/ contact</span>
-          <h1 className="shine-heading intro-animate intro-delay-2">Parlons de votre projet.</h1>
+          <ShineHeading as="h1" className="intro-animate intro-delay-2">Parlons de votre projet.</ShineHeading>
           <p className="intro-animate intro-delay-3">
             Décrivez-nous votre besoin, on revient vers vous rapidement avec un premier retour concret.
           </p>
